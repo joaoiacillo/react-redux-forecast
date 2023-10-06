@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import getGeolocation from "./geolocation";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { geolocationActions } from "./features/geolocation/geolocationSlice";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import Container from "./components/ui/Container";
+
+import "./assets/css/styles.css";
+
+/**
+ * App main component.
+ * 
+ * @author João Iacillo
+ */
+const App = () => {
+    const coords = useSelector((state) => state.geolocation);
+    const dispatcher = useDispatch();
+
+    useEffect(() => {
+        getGeolocation((coords) => dispatcher(geolocationActions.setCoordinates(coords)));
+    }, [ dispatcher ]);
+
+    return (
+        <Container>
+            <p>Latitude: {coords.latitude}</p>
+            <p>Longitude: {coords.longitude}</p>
+        </Container>
+    );
+};
 
 export default App;
