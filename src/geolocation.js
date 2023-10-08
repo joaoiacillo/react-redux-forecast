@@ -1,35 +1,39 @@
+import createLogger from "./logger";
+
+const logger = createLogger("geolocation");
+
 const options = {
     enableHighAccuracy: false,
-    timeout: 5000,
+    timeout: 2000,
     maximumAge: 100
 };
 
-const onSuccess = (pos, setGeolocation) => {
-    const coords = {
-        latitude: pos.coords.latitude,
-        longitude: pos.coords.longitude
-    };
-    setGeolocation(coords);
-};
-
-const onError = (err, setGeolocation) => {
-    getGeolocation(setGeolocation);
-};
-
 /**
- * Gets the user geolocation coordinates (latitude and longitude) and pass them
- * to the callback function `setGeolocation`.
- * 
- * @param {Function} setGeolocation Func to set the geolocation in the state
+ * Gets the user geolocation coordinates (latitude and longitude).
  */
-const getGeolocation = (setGeolocation) => {
-    console.log("Getting user geolocation...");
-    
-    navigator.geolocation.getCurrentPosition(
-        (pos) => onSuccess(pos, setGeolocation),
-        (err) => onError(err, setGeolocation),
-        options
-    );
+const getGeolocation = () => {
+    logger.log("Getting user geolocation");
+
+    return new Promise((resolve, reject) => {
+        const onSuccess = (pos) => {
+            const { latitude, longitude } = pos.coords;
+            resolve({
+                latitude: latitude.toFixed(2),
+                longitude: longitude.toFixed(2)
+            });
+        };
+
+        const onError = (err) => {
+            logger.error("Couldn't get geolocation", { err });
+            reject(err);
+        };
+
+        navigator.geolocation.getCurrentPosition(
+            onSuccess,
+            onError,
+            options
+        );
+    });
 };
 
 export default getGeolocation;

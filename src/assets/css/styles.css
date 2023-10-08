@@ -10,10 +10,75 @@ body {
 }
 
 .container {
-    height: 100vh;
     display: flex;
+    max-width: 1000px;
+    height: 100vh;
+    margin: 0 auto;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
+.temperature {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.temperature-block {
+    flex: 1;
+    padding: 40px 15px;
+    border: solid 1px rgba(0, 0, 0, .1);
+    text-align: center;
+}
+
+.temperature-block img {
+    width: 32px;
+}
+
+.temperature-block h2 {
+    opacity: .7;
+}
+
+.temperature-block p {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+    border: solid 1px rgba(0, 0, 0, .1);
+}
+
+.location > div {
+    flex: 1;
+}
+
+.location > div:first-child {
+    padding-left: 30px;
+}
+
+.location .coords {
+    flex: .5;
+    border-left: solid 1px rgba(0, 0, 0, .1);
+    text-align: center;
+}
+
+.coords h3 {
+    margin: 10px 0;
+}
+
+@media screen and (max-width: 664px) {
+    .location {
+        flex-direction: column;
+    }
+
+    .location .coords {
+        border: none;
+    }
+}

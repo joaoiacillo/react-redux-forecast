@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { geolocationReducer } from "./features/geolocation/geolocationSlice";
+import { forecastReducer } from "./features/forecast/forecastSlice";
 
 const store = configureStore({
     reducer: {
-        geolocation: geolocationReducer
+        geolocation: geolocationReducer,
+        forecast: forecastReducer
     }
 });
 

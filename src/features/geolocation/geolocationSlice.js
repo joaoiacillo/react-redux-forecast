@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import createLogger from "../../logger";
+
+const logger = createLogger("features/geolocation/geolocationSlice");
 
 const initialState = {
     latitude: null,
@@ -9,9 +12,10 @@ const geolocationSlice = createSlice({
     name: "geolocation",
     initialState,
     reducers: {
-        setCoordinates(state, { payload }) {
-            state.latitude = payload.latitude;
-            state.longitude = payload.longitude;
+        setCoordinates(state, { payload: { latitude, longitude } }) {
+            logger.log("Setting new coordinates", { latitude, longitude });
+            state.latitude = latitude;
+            state.longitude = longitude;
         }
     }
 });
